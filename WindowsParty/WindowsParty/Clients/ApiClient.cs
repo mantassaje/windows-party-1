@@ -27,28 +27,6 @@ namespace WindowsParty.Clients
             return response;
         }
 
-        public async Task<List<Server>> GetServersAsync()
-        {
-            return new List<Server>()
-            {
-                new Server()
-                {
-                    Distance = 123,
-                    Name = "Poland",
-                },
-                new Server()
-                {
-                    Distance = 4651,
-                    Name = "Vilnius",
-                },
-                new Server()
-                {
-                    Distance = 952,
-                    Name = "Scotland",
-                },
-            };
-        }
-
         public IRestResponse<AuthToken> PostToken(string username, string password)
         {
             var client = new RestClient(ApiBaseUrl);
@@ -61,14 +39,6 @@ namespace WindowsParty.Clients
             });
             var response = client.Post<AuthToken>(request);
             return response;
-        }
-
-        public async Task<AuthToken> PostTokenAsync(string username, string password)
-        {
-            return new AuthToken()
-            {
-                Token = "sd1kyu546w54l5ewub9ku894sdi9gr4434jb923u"
-            };
         }
     }
 }

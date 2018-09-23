@@ -10,7 +10,7 @@ using log4net;
 
 namespace WindowsParty.ViewModels
 {
-    public class LoginViewModel : ViewModelBase
+    public class LoginViewModel : Caliburn.Micro.PropertyChangedBase
     {
         private ISessionService sessionService { get; set; }
         private INavigationService navigationService { get; set; }
@@ -18,8 +18,8 @@ namespace WindowsParty.ViewModels
 
         public ICommand LoginButtonCommand { get; set; }
 
-        public string Username { get; set; } = "tesonet";
-        public string Password { get; set; } = "partyanimal";
+        public string Username { get; set; }
+        public string Password { get; set; }
         private string _errorMessage;
         public string ErrorMessage {
             get
@@ -29,7 +29,7 @@ namespace WindowsParty.ViewModels
             set
             {
                 _errorMessage = value;
-                NotifyPropertyChanged();
+                NotifyOfPropertyChange(() => ErrorMessage);
             }
         }
 

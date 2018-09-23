@@ -12,7 +12,7 @@ using WindowsParty.Views;
 
 namespace WindowsParty.ViewModels
 {
-    public class ServerListViewModel : ViewModelBase
+    public class ServerListViewModel : Caliburn.Micro.PropertyChangedBase
     {
         private ISessionService sessionService { get; set; }
         private INavigationService navigationService { get; set; }
@@ -30,7 +30,7 @@ namespace WindowsParty.ViewModels
             set
             {
                 _servers = value;
-                NotifyPropertyChanged();
+                NotifyOfPropertyChange(() => Servers);
             }
         }
 
