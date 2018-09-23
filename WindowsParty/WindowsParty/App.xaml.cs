@@ -20,29 +20,29 @@ namespace WindowsParty
     public partial class App : Application
     {
         public static IContainer Container { get; private set; }
-
+        private static ILog log = LogManager.GetLogger(typeof(App));
         public App()
         {
-            ILog log = LogManager.GetLogger(typeof(App));
             log4net.Config.XmlConfigurator.Configure();
             log.Info("Started application");
-            try
-            {
-                var builder = new ContainerBuilder();
-                builder.Register(v => { return log; }).SingleInstance();
-                builder.RegisterType<ApiClient>().As<IApiClient>();
-                builder.RegisterType<SessionService>().As<ISessionService>().SingleInstance();
-                builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
-                builder.RegisterType<LoginViewModel>();
-                builder.RegisterType<ServerListViewModel>();
-                Container = builder.Build();
-                Container.InjectProperties(Container);
-            }
-            catch(Exception ex)
-            {
-                log.Fatal($"Failed to start application", ex);
-                throw;
-            }
+            AppDomain currentDomain = AppDomain.CurrentDomain;
+            currentDomain.UnhandledException += new UnhandledExceptionEventHandler(FatalExceptionHandler);
+
+            var builder = new ContainerBuilder();
+            builder.Register(v => { return log; }).SingleInstance();
+            builder.RegisterType<ApiClient>().As<IApiClient>();
+            builder.RegisterType<SessionService>().As<ISessionService>().SingleInstance();
+            builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
+            builder.RegisterType<LoginViewModel>();
+            builder.RegisterType<ServerListViewModel>();
+            Container = builder.Build();
+            Container.InjectProperties(Container);
+        }
+
+        static void FatalExceptionHandler(object sender, UnhandledExceptionEventArgs args)
+        {
+            Exception ex = (Exception)args.ExceptionObject;
+            log.Fatal($"Application exited with exception", ex);
         }
     }
 }
