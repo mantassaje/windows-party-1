@@ -24,7 +24,7 @@ namespace WindowsParty.Views
         {
             InitializeComponent();
             this.ShowsNavigationUI = false;
-            this.DataContext = App.Container.Resolve<ServerListViewModel>();
+            this.DataContext = App.Container?.Resolve<ServerListViewModel>();
             //this.ServerListDataGrid.ItemsSource = GetServers();
         }
     }

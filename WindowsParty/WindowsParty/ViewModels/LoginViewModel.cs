@@ -19,6 +19,7 @@ namespace WindowsParty.ViewModels
         public ICommand LoginButtonCommand { get; set; }
 
         public string Username { get; set; } = "tesonet";
+        public string Password { get; set; } = "partyanimal";
         private string _errorMessage;
         public string ErrorMessage {
             get
@@ -40,10 +41,9 @@ namespace WindowsParty.ViewModels
             LoginButtonCommand = new RelayCommand(o => LoginButton_Click(o));
         }
 
-        public void LoginButton_Click(object passwordBoxObj)
+        public void LoginButton_Click(object o)
         {
-            var passwordBox = (PasswordBox)passwordBoxObj;
-            var success = sessionService.Login(Username, passwordBox.Password);
+            var success = sessionService.Login(Username, Password);
             if (success)
             {
                 log.Info("Loggin succeeded");

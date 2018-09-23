@@ -41,7 +41,7 @@ namespace WindowsParty.ViewModels
             this.apiClient = apiClient;
             LogoutButtonCommand = new RelayCommand(o => LogoutButton_Click(o));
             var serversResponse = apiClient.GetServers(sessionService.GetToken());
-            Servers = serversResponse.Data;
+            Servers = serversResponse?.Data;
         }
 
         public void LogoutButton_Click(object sender)

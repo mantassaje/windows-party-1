@@ -10,6 +10,6 @@ namespace WindowsParty.Services.Contracts
     public interface INavigationService
     {
         void SetMainFrame(Frame frame);
-        void Navigate(Page page);
+        void Navigate(object page);
     }
 }

@@ -9,8 +9,8 @@
     Title="Login" d:DesignHeight="300" d:DesignWidth="300" ShowsNavigationUI="False">
     <Grid HorizontalAlignment="Center" Height="183" Margin="51,44,39,42" VerticalAlignment="Center" Width="202">
         <TextBox x:Name="LoginUsernameTextbox" Text="{Binding Username}" HorizontalAlignment="Left" Height="23" Margin="0,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="202" AutomationProperties.HelpText="Username" AutomationProperties.IsRequiredForForm="True"/>
-        <PasswordBox x:Name="LoginPasswordTextbox" HorizontalAlignment="Left" Height="23" Margin="0,80,0,0" VerticalAlignment="Top" Width="202" AutomationProperties.IsRequiredForForm="True"/>
-        <Button x:Name="LoginButton" Content="Log in" HorizontalAlignment="Left" Margin="0,108,0,0" VerticalAlignment="Top" Width="202" Command="{Binding LoginButtonCommand}" CommandParameter="{Binding ElementName=LoginPasswordTextbox}" />
+        <PasswordBox x:Name="LoginPasswordTextbox" HorizontalAlignment="Left" Height="23" Margin="0,80,0,0" VerticalAlignment="Top" Width="202" AutomationProperties.IsRequiredForForm="True" PasswordChanged="PasswordBox_PasswordChanged"/>
+        <Button x:Name="LoginButton" Content="Log in" HorizontalAlignment="Left" Margin="0,108,0,0" VerticalAlignment="Top" Width="202" Command="{Binding LoginButtonCommand}" />
         <Label x:Name="ErrorLabel" Content="{Binding ErrorMessage}" HorizontalAlignment="Left" Margin="0,133,0,0" VerticalAlignment="Top" Width="202" Padding="0,0,0,0" Foreground="Red"/>
     </Grid>
 </Page>

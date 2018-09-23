@@ -26,8 +26,12 @@ namespace WindowsParty.Views
         public Login()
         {
             InitializeComponent();
-            DataContext = App.Container.Resolve<LoginViewModel>();
-            this.ShowsNavigationUI = false;
+            DataContext = App.Container?.Resolve<LoginViewModel>();
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            ((LoginViewModel)this.DataContext).Password = ((PasswordBox)sender).Password;
         }
     }
 }

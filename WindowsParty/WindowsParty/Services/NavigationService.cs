@@ -15,7 +15,7 @@ namespace WindowsParty.Services
         {
             this.frame = frame;
         }
-        public void Navigate(Page page)
+        public void Navigate(object page)
         {
             frame.Navigate(page);
         }
