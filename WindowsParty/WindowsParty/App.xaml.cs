@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Core;
 using Autofac.Extensions;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,21 +11,38 @@ using System.Threading.Tasks;
 using System.Windows;
 using WindowsParty.Clients;
 using WindowsParty.Clients.Contracts;
+using WindowsParty.Services;
+using WindowsParty.Services.Contracts;
+using WindowsParty.ViewModels;
 
 namespace WindowsParty
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         public static IContainer Container { get; private set; }
 
         public App()
         {
-            var builder = new ContainerBuilder();
-            builder.RegisterType<ApiClient>().As<IApiClient>();
-            Container = builder.Build();
+            ILog log = LogManager.GetLogger(typeof(App));
+            log4net.Config.XmlConfigurator.Configure();
+            log.Info("Started application");
+            try
+            {
+                var builder = new ContainerBuilder();
+                builder.Register(v => { return log; }).SingleInstance();
+                builder.RegisterType<ApiClient>().As<IApiClient>();
+                builder.RegisterType<SessionService>().As<ISessionService>().SingleInstance();
+                builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
+                builder.RegisterType<LoginViewModel>();
+                builder.RegisterType<ServerListViewModel>();
+                Container = builder.Build();
+                Container.InjectProperties(Container);
+            }
+            catch(Exception ex)
+            {
+                log.Fatal($"Failed to start application", ex);
+                throw;
+            }
         }
     }
 }

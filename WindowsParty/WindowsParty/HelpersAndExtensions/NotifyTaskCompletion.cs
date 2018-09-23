@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace WindowsParty.Clients.Contracts
 {
+    /// <summary>
+    /// This class is copied from example
+    /// </summary>
     public sealed class NotifyTaskCompletion<TResult> : INotifyPropertyChanged
     {
         public NotifyTaskCompletion(Task<TResult> task)

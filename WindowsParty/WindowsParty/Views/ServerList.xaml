@@ -16,9 +16,9 @@
             <RowDefinition Height="64px" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Button x:Name="LogoutButton" Grid.Column="1" Content="Logout" HorizontalAlignment="Right" VerticalAlignment="Center" Click="LogoutButton_Click" Margin="0,0,10,0" Padding="10,2"/>
+        <Button x:Name="LogoutButton" Grid.Column="1" Content="Logout" HorizontalAlignment="Right" VerticalAlignment="Center" Command="{Binding LogoutButtonCommand}" Margin="0,0,10,0" Padding="10,2"/>
         <Rectangle Grid.Row="1" Grid.Column="1" Fill="#FFF0F0F0"/>
-        <DataGrid x:Name="ServerListDataGrid" Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" IsReadOnly="True" FrozenColumnCount="2" AutoGenerateColumns="False">
+        <DataGrid x:Name="ServerListDataGrid" ItemsSource="{Binding Servers}" Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" IsReadOnly="True" FrozenColumnCount="2" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Name}" Header="SERVER" Width="80*"/>
                 <DataGridTextColumn Binding="{Binding Distance}" Header="DISTANCE" Width="20*"/>

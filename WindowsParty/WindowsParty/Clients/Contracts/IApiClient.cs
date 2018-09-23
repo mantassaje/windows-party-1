@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace WindowsParty.Clients.Contracts
         //http://playground.tesonet.lt/v1/tokens
         Task<AuthToken> PostTokenAsync(string username, string password);
         Task<List<Server>> GetServersAsync();
-        AuthToken PostToken(string username, string password);
-        List<Server> GetServers();
+        IRestResponse<AuthToken> PostToken(string username, string password);
+        IRestResponse<List<Server>> GetServers(string token);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autofac;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,18 +26,8 @@ namespace WindowsParty.Views
         public Login()
         {
             InitializeComponent();
-            DataContext = new LoginViewModel();
+            DataContext = App.Container.Resolve<LoginViewModel>();
             this.ShowsNavigationUI = false;
-        }
-
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-            //var rez = new NotifyTaskCompletion<int>(((LoginViewModel)DataContext).Test());
-            var test = ((LoginViewModel)DataContext).Test().Result;
-            NavigationService navService = NavigationService.GetNavigationService(this);
-            var nextPage = new ServerList();
-            navService.Navigate(nextPage);
         }
     }
 }
