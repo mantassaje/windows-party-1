@@ -13,23 +13,17 @@ using WindowsParty.Views;
 
 namespace WindowsParty.ViewModels
 {
-    public class ServerListViewModel : Caliburn.Micro.Screen
+    public class ServerListViewModel : Screen
     {
         private ISessionService sessionService { get; set; }
         private IEventAggregator eventAggregator { get; set; }
         private IApiClient apiClient { get; set; }
 
         private BindableCollection<Server> servers;
-        public BindableCollection<Server> Servers {
-            get
-            {
-                return servers;
-            }
-            set
-            {
-                servers = value;
-                NotifyOfPropertyChange(() => Servers);
-            }
+        public BindableCollection<Server> Servers
+        {
+            get => servers;
+            set => Set(ref servers, value);
         }
 
         public ServerListViewModel(ISessionService sessionService, IEventAggregator eventAggregator, IApiClient apiClient)
@@ -44,11 +38,10 @@ namespace WindowsParty.ViewModels
             base.OnActivate();
             var token = await sessionService.GetToken();
             var serversResult = await apiClient.GetServers(token);
-            await Task.Delay(1000);
             Servers = new BindableCollection<Server>(serversResult.Data);
         }
 
-        public void Logout(object sender)
+        public void Logout()
         {
             sessionService.Logout();
             servers = null;

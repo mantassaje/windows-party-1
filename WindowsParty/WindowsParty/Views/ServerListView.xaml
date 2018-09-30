@@ -25,5 +25,6 @@
             </DataGrid.Columns>
         </DataGrid>
         <Image Source="/Images/list-img.png" Stretch="UniformToFill" Grid.Column="1" Grid.Row="1"/>
+        <Image Source="/Images/logo-list.png" Stretch="Uniform" HorizontalAlignment="Left" Height="27" VerticalAlignment="Center" Width="97" Margin="0,0,0,0"/>
     </Grid>
 </UserControl>

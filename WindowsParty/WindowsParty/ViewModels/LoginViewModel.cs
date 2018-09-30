@@ -18,19 +18,13 @@ namespace WindowsParty.ViewModels
         private IEventAggregator eventAggregator { get; set; }
         private log4net.ILog log { get; set; }
 
-        public string Username { get; set; } = "tesonet";
-        public string Password { get; set; } = "partyanimal";
-        private string _errorMessage;
-        public string ErrorMessage {
-            get
-            {
-                return _errorMessage;
-            }
-            set
-            {
-                _errorMessage = value;
-                NotifyOfPropertyChange(() => ErrorMessage);
-            }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        private string errorMessage;
+        public string ErrorMessage
+        {
+            get => errorMessage;
+            set => Set(ref errorMessage, value);
         }
 
         public LoginViewModel(ISessionService sessionService, IEventAggregator eventAggregator)
@@ -46,6 +40,7 @@ namespace WindowsParty.ViewModels
             if (success)
             {
                 log.Info("Loggin succeeded");
+                Cleanup();
                 eventAggregator.ChangeScreen<ServerListViewModel>();
             }
             else
@@ -53,6 +48,13 @@ namespace WindowsParty.ViewModels
                 log.Info("Loggin failed");
                 ErrorMessage = "Incorrect username or password";
             }
+        }
+
+        private void Cleanup()
+        {
+            Username = null;
+            Password = null;
+            ErrorMessage = null;
         }
     }
 }
