@@ -26,6 +26,12 @@ namespace WindowsParty.Views
             InitializeComponent();
         }
 
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            base.OnRender(drawingContext);
+            Password.Clear();
+        }
+
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             ((LoginViewModel)this.DataContext).Password = ((PasswordBox)sender).Password;
