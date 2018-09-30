@@ -18,8 +18,18 @@ namespace WindowsParty.ViewModels
         private IEventAggregator eventAggregator { get; set; }
         private log4net.ILog log { get; set; }
 
-        public string Username { get; set; }
-        public string Password { get; set; }
+        private string username;
+        public string Username
+        {
+            get => username;
+            set => Set(ref username, value);
+        }
+        private string password;
+        public string Password
+        {
+            get => password;
+            set => Set(ref password, value);
+        }
         private string errorMessage;
         public string ErrorMessage
         {
