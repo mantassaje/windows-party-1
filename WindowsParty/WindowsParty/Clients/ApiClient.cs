@@ -23,7 +23,7 @@ namespace WindowsParty.Clients
             var client = new RestClient(ApiBaseUrl);
             var request = new RestRequest("servers");
             request.AddHeader("Authorization", $"Bearer {token}");
-            var response = client.Get<List<Server>>(request);
+            var response = await client.ExecuteGetTaskAsync<List<Server>>(request);
             return response;
         }
 
@@ -37,7 +37,7 @@ namespace WindowsParty.Clients
                 Password = password,
                 Username = username
             });
-            var response = client.Post<AuthToken>(request);
+            var response = await client.ExecutePostTaskAsync<AuthToken>(request);
             return response;
         }
     }

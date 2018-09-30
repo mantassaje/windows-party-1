@@ -19,7 +19,18 @@ namespace WindowsParty.ViewModels
         private IEventAggregator eventAggregator { get; set; }
         private IApiClient apiClient { get; set; }
 
-        public BindableCollection<Server> Servers { get; } = new BindableCollection<Server>();
+        private BindableCollection<Server> servers;
+        public BindableCollection<Server> Servers {
+            get
+            {
+                return servers;
+            }
+            set
+            {
+                servers = value;
+                NotifyOfPropertyChange(() => Servers);
+            }
+        }
 
         public ServerListViewModel(ISessionService sessionService, IEventAggregator eventAggregator, IApiClient apiClient)
         {
@@ -33,12 +44,14 @@ namespace WindowsParty.ViewModels
             base.OnActivate();
             var token = await sessionService.GetToken();
             var serversResult = await apiClient.GetServers(token);
-            //Servers = );
+            await Task.Delay(1000);
+            Servers = new BindableCollection<Server>(serversResult.Data);
         }
 
-        public void LogoutButton_Click(object sender)
+        public void Logout(object sender)
         {
             sessionService.Logout();
+            servers = null;
             eventAggregator.ChangeScreen<LoginViewModel>();
         }
     }

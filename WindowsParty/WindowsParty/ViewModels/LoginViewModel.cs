@@ -12,7 +12,7 @@ using Caliburn.Micro;
 
 namespace WindowsParty.ViewModels
 {
-    public class LoginViewModel : Caliburn.Micro.Screen
+    public class LoginViewModel : Screen
     {
         private ISessionService sessionService { get; set; }
         private IEventAggregator eventAggregator { get; set; }
