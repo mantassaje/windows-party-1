@@ -8,8 +8,8 @@ namespace WindowsParty.Services.Contracts
 {
     public interface ISessionService
     {
-        bool Login(string username, string password);
-        string GetToken();
-        void Logout();
+        Task<bool> Login(string username, string password);
+        Task<string> GetToken();
+        Task Logout();
     }
 }

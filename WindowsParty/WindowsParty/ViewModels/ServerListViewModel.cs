@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,42 +13,33 @@ using WindowsParty.Views;
 
 namespace WindowsParty.ViewModels
 {
-    public class ServerListViewModel : Caliburn.Micro.PropertyChangedBase
+    public class ServerListViewModel : Caliburn.Micro.Screen
     {
         private ISessionService sessionService { get; set; }
-        private INavigationService navigationService { get; set; }
+        private IEventAggregator eventAggregator { get; set; }
         private IApiClient apiClient { get; set; }
 
-        public ICommand LogoutButtonCommand { get; set; }
+        public BindableCollection<Server> Servers { get; } = new BindableCollection<Server>();
 
-        private List<Server> _servers;
-        public List<Server> Servers
-        {
-            get
-            {
-                return _servers;
-            }
-            set
-            {
-                _servers = value;
-                NotifyOfPropertyChange(() => Servers);
-            }
-        }
-
-        public ServerListViewModel(ISessionService sessionService, INavigationService navigationService, IApiClient apiClient)
+        public ServerListViewModel(ISessionService sessionService, IEventAggregator eventAggregator, IApiClient apiClient)
         {
             this.sessionService = sessionService;
-            this.navigationService = navigationService;
+            this.eventAggregator = eventAggregator;
             this.apiClient = apiClient;
-            LogoutButtonCommand = new RelayCommand(o => LogoutButton_Click(o));
-            var serversResponse = apiClient.GetServers(sessionService.GetToken());
-            Servers = serversResponse?.Data;
+        }
+
+        protected override async void OnActivate()
+        {
+            base.OnActivate();
+            var token = await sessionService.GetToken();
+            var serversResult = await apiClient.GetServers(token);
+            //Servers = );
         }
 
         public void LogoutButton_Click(object sender)
         {
             sessionService.Logout();
-            navigationService.Navigate(new Login());
+            eventAggregator.ChangeScreen<LoginViewModel>();
         }
     }
 }

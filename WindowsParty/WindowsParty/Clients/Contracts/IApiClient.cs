@@ -10,7 +10,7 @@ namespace WindowsParty.Clients.Contracts
 {
     public interface IApiClient
     {
-        IRestResponse<AuthToken> PostToken(string username, string password);
-        IRestResponse<List<Server>> GetServers(string token);
+        Task<IRestResponse<AuthToken>> PostToken(string username, string password);
+        Task<IRestResponse<List<Server>>> GetServers(string token);
     }
 }

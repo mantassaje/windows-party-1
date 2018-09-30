@@ -1,5 +1,4 @@
-﻿using Autofac;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,17 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WindowsParty.Models;
-using WindowsParty.ViewModels;
 
 namespace WindowsParty.Views
 {
-    public partial class ServerList : Page
+    /// <summary>
+    /// Interaction logic for ServerListView.xaml
+    /// </summary>
+    public partial class ServerListView : UserControl
     {
-        public ServerList()
+        public ServerListView()
         {
             InitializeComponent();
-            this.DataContext = App.Container?.Resolve<ServerListViewModel>();
         }
     }
 }

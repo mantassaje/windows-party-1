@@ -7,19 +7,19 @@ using WindowsParty.Services.Contracts;
 using System.ComponentModel;
 using System.Windows.Controls;
 using log4net;
+using System.Threading.Tasks;
+using Caliburn.Micro;
 
 namespace WindowsParty.ViewModels
 {
-    public class LoginViewModel : Caliburn.Micro.PropertyChangedBase
+    public class LoginViewModel : Caliburn.Micro.Screen
     {
         private ISessionService sessionService { get; set; }
-        private INavigationService navigationService { get; set; }
-        private ILog log { get; set; }
+        private IEventAggregator eventAggregator { get; set; }
+        private log4net.ILog log { get; set; }
 
-        public ICommand LoginButtonCommand { get; set; }
-
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public string Username { get; set; } = "tesonet";
+        public string Password { get; set; } = "partyanimal";
         private string _errorMessage;
         public string ErrorMessage {
             get
@@ -33,21 +33,20 @@ namespace WindowsParty.ViewModels
             }
         }
 
-        public LoginViewModel(ISessionService sessionService, INavigationService navigationService, ILog log)
+        public LoginViewModel(ISessionService sessionService, IEventAggregator eventAggregator)
         {
             this.sessionService = sessionService;
-            this.navigationService = navigationService;
-            this.log = log;
-            LoginButtonCommand = new RelayCommand(o => LoginButton_Click(o));
+            this.eventAggregator = eventAggregator;
+            this.log = log4net.LogManager.GetLogger(typeof(LoginViewModel));
         }
 
-        public void LoginButton_Click(object o)
+        public async Task Login()
         {
-            var success = sessionService.Login(Username, Password);
+            var success = await sessionService.Login(Username, Password);
             if (success)
             {
                 log.Info("Loggin succeeded");
-                navigationService.Navigate(new ServerList());
+                eventAggregator.ChangeScreen<ServerListViewModel>();
             }
             else
             {
