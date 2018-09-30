@@ -18,16 +18,16 @@ namespace WindowsParty.Clients
     {
         private readonly string ApiBaseUrl = "http://playground.tesonet.lt/v1";
 
-        public IRestResponse<List<Server>> GetServers(string token)
+        public async Task<IRestResponse<List<Server>>> GetServers(string token)
         {
             var client = new RestClient(ApiBaseUrl);
             var request = new RestRequest("servers");
             request.AddHeader("Authorization", $"Bearer {token}");
-            var response = client.Get<List<Server>>(request);
+            var response = await client.ExecuteGetTaskAsync<List<Server>>(request);
             return response;
         }
 
-        public IRestResponse<AuthToken> PostToken(string username, string password)
+        public async Task<IRestResponse<AuthToken>> PostToken(string username, string password)
         {
             var client = new RestClient(ApiBaseUrl);
             var request = new RestRequest("tokens");
@@ -37,7 +37,7 @@ namespace WindowsParty.Clients
                 Password = password,
                 Username = username
             });
-            var response = client.Post<AuthToken>(request);
+            var response = await client.ExecutePostTaskAsync<AuthToken>(request);
             return response;
         }
     }

@@ -20,20 +20,20 @@ namespace WindowsParty.Services
             this.apiClient = apiClient;
         }
 
-        public bool Login(string username, string password)
+        public async Task<bool> Login(string username, string password)
         {
-            var tokenResponse = apiClient.PostToken(username, password);
+            var tokenResponse = await apiClient.PostToken(username, password);
             if (tokenResponse.StatusCode != System.Net.HttpStatusCode.OK) return false;
             token = tokenResponse.Data;
             return true;
         }
 
-        public string GetToken()
+        public async Task<string> GetToken()
         {
             return token?.Token;
         }
 
-        public void Logout()
+        public async Task Logout()
         {
             token = null;
         }
